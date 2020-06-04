@@ -9,38 +9,35 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-public class Helper {
+public class JsonNodeHelper {
 
     public static String jsonToTypeTraversal(final JsonNode node) {
-        return Helper.jsonToTypeTraversal(node, "");
+        return JsonNodeHelper.jsonToTypeTraversal(node, "");
     }
 
     public static String jsonToTypeTraversal(final JsonNode node, final String appendName) {
+        String namePath = StringUtils.isEmpty(appendName) ? "" : appendName + "::";
         if(node.isArray()) {
             ArrayNode arrayNode = (ArrayNode) node;
             String arrayNested = jsonNodeIteratorLimitDepth(arrayNode.iterator(), appendName, 1);
-            return appendName + "::" + node.getNodeType().name() + "\n" + arrayNested;
+            return namePath + node.getNodeType().name() + "\n" + arrayNested;
         } else if (node.isValueNode()) {
-            return appendName + "::" + node.getNodeType().name();
+            return namePath + node.getNodeType().name();
         }
-        return Helper.jsonNodeFieldsIterator(node.fields(), appendName);
-    }
-
-    public static String jsonTraversalWithFields(final JsonNode node, final String appendName) {
-        return Helper.jsonToTypeTraversal(node, appendName);
+        return JsonNodeHelper.jsonNodeFieldsIterator(node.fields(), appendName);
     }
 
     public static String jsonNodeFieldsIterator(final Iterator<Map.Entry<String, JsonNode>> nodeFields, final String appendName) {
-        return Helper.iteratorToStream(nodeFields)
-                .map((entry) -> Helper.jsonTraversalWithFields(entry.getValue(),
+        return JsonNodeHelper.iteratorToStream(nodeFields)
+                .map((entry) -> JsonNodeHelper.jsonToTypeTraversal(entry.getValue(),
                         StringUtils.isEmpty(appendName) ? entry.getKey() : appendName + ":" + entry.getKey()))
                 .collect(Collectors.joining("\n"));
     }
 
     public static String jsonNodeIteratorLimitDepth(final Iterator<JsonNode> nodes, final String appendName, final Integer limit) {
-        return Helper.iteratorToStream(nodes)
+        return JsonNodeHelper.iteratorToStream(nodes)
                 .limit(limit)
-                .map((node) -> Helper.jsonToTypeTraversal(node, appendName)).collect(Collectors.joining( "\n"));
+                .map((node) -> JsonNodeHelper.jsonToTypeTraversal(node, appendName)).collect(Collectors.joining( "\n"));
     }
 
     public static <T> Stream<T> iteratorToStream(final Iterator<T> it) {

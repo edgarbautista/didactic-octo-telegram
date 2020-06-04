@@ -1,6 +1,6 @@
 package com.edgar.bautista.samplecode.controllers;
 
-import com.edgar.bautista.samplecode.common.Helper;
+import com.edgar.bautista.samplecode.common.JsonNodeHelper;
 import com.edgar.bautista.samplecode.models.CustomJsonNodeEvent;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,6 @@ public class JsonTraversalController {
     public String jsonTraversal(@RequestBody JsonNode payload) {
         CustomJsonNodeEvent event = new CustomJsonNodeEvent(payload);
         jsonNodePayload.publishEvent(event);
-        return Helper.jsonToTypeTraversal(payload);
+        return JsonNodeHelper.jsonToTypeTraversal(payload);
     }
 }
