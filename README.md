@@ -1,10 +1,10 @@
 # sample-code
-This code is meant as a simple sample on how to iterate through a JsonNode Graph.
+This code sample on how to iterate through a JsonNode Graph.
 
-## The app exposes an endpoint that takes in JSON and returns string reprensetaion of the fields path mapped to data type.
+## The app exposes an endpoint that takes in JSON and returns string representation of the field's path mapped to data type.
 
 # TODO: 
-- *TESTS*
+- *More TESTS*
 
 # NOTES: 
 - It only grabs the first item from an array. 

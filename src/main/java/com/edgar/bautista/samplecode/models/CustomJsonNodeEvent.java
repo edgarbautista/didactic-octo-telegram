@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.context.ApplicationEvent;
 
 public class CustomJsonNodeEvent extends ApplicationEvent {
-    private JsonNode node;
+    private final JsonNode node;
 
     public CustomJsonNodeEvent(JsonNode node) {
         super(node);

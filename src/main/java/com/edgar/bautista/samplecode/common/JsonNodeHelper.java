@@ -17,7 +17,7 @@ public class JsonNodeHelper {
 
     public static String jsonToTypeTraversal(final JsonNode node, final String appendName) {
         String namePath = StringUtils.isEmpty(appendName) ? "" : appendName + "::";
-        if(node.isArray()) {
+        if (node.isArray()) {
             ArrayNode arrayNode = (ArrayNode) node;
             String arrayNested = jsonNodeIteratorLimitDepth(arrayNode.iterator(), appendName, 1);
             return namePath + node.getNodeType().name() + "\n" + arrayNested;
@@ -37,7 +37,7 @@ public class JsonNodeHelper {
     public static String jsonNodeIteratorLimitDepth(final Iterator<JsonNode> nodes, final String appendName, final Integer limit) {
         return JsonNodeHelper.iteratorToStream(nodes)
                 .limit(limit)
-                .map((node) -> JsonNodeHelper.jsonToTypeTraversal(node, appendName)).collect(Collectors.joining( "\n"));
+                .map((node) -> JsonNodeHelper.jsonToTypeTraversal(node, appendName)).collect(Collectors.joining("\n"));
     }
 
     public static <T> Stream<T> iteratorToStream(final Iterator<T> it) {
